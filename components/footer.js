@@ -5,14 +5,14 @@ import { Ionicons } from "@expo/vector-icons";
 const Footer = ({ onMenuPress }) => {
   return (
     <View style={styles.footer}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("home")}>
       <Image
         source={require("../assets/footer/homeSelec.png")}
         style={styles.image}
       />
       </TouchableOpacity>
       
-      <TouchableOpacity>
+      <TouchableOpacity  onPress={() => navigation.navigate("addRef")}>
       <Image
         source={require("../assets/footer/add.png")}
         style={styles.imageAdd}
@@ -20,7 +20,7 @@ const Footer = ({ onMenuPress }) => {
       </TouchableOpacity>
       
 
-      <TouchableOpacity onPress={onMenuPress}>
+      <TouchableOpacity  onPress={() => navigation.navigate("suasRef")}>
       <Image
         source={require("../assets/footer/receitas.png")}
         style={styles.image}

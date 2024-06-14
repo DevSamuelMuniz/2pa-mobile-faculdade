@@ -1,72 +1,35 @@
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from "react-native";
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 
 //components
-import InputLabel from '../components/inputLabel'
+import InputLabel from '../components/inputLabel';
 
 export default function LoginScreen({ navigation }) {
   const [nomeRef, setnomeRef] = useState("");
   const [descRef, setdescRef] = useState("");
   const [imageUri, setImageUri] = useState(null);
 
-  const handlePhotoOption = () => {
-    Alert.alert(
-      "Adicionar foto da Refeição",
-      "Escolha uma opção",
-      [
-        {
-          text: "Tirar Foto",
-          onPress: () => handleTakePhoto(),
-        },
-        {
-          text: "Escolher da Galeria",
-          onPress: () => handleChoosePhoto(),
-        },
-        {
-          text: "Cancelar",
-          style: "cancel",
-        },
-      ],
-      { cancelable: true }
-    );
-  };
+  const handlePhotoOption = async () => {
+    // Solicita permissão para usar a câmera
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+    if (status !== 'granted') {
+      Alert.alert('Permissão necessária', 'Precisamos da permissão para acessar a câmera');
+      return;
+    }
 
-  const handleTakePhoto = () => {
-    launchCamera(
-      {
-        mediaType: 'photo',
-        cameraType: 'back',
-      },
-      (response) => {
-        if (response.didCancel) {
-          console.log('User cancelled image picker');
-        } else if (response.errorCode) {
-          console.log('ImagePicker Error: ', response.errorCode);
-        } else {
-          const uri = response.assets[0].uri;
-          setImageUri(uri);
-        }
-      }
-    );
-  };
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
-  const handleChoosePhoto = () => {
-    launchImageLibrary(
-      {
-        mediaType: 'photo',
-      },
-      (response) => {
-        if (response.didCancel) {
-          console.log('User cancelled image picker');
-        } else if (response.errorCode) {
-          console.log('ImagePicker Error: ', response.errorCode);
-        } else {
-          const uri = response.assets[0].uri;
-          setImageUri(uri);
-        }
-      }
-    );
+    if (!result.canceled) {
+      console.log("Image URI: ", result.uri);
+      setImageUri(result.uri);
+      Alert.alert('Foto Capturada', 'Sua foto foi tirada com sucesso!');
+    }
   };
 
   return (
@@ -87,9 +50,7 @@ export default function LoginScreen({ navigation }) {
         onChangeText={setdescRef}
         placeholder="Descreva a sua refeição"
       />
-      {imageUri && (
-        <Image source={{ uri: imageUri }} style={styles.imagePreview} />
-      )}
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.buttonadd} onPress={handlePhotoOption}>
           <Image
@@ -98,6 +59,10 @@ export default function LoginScreen({ navigation }) {
           />
           <Text style={styles.buttonTextAdd}>Adicionar foto da Refeição</Text>
         </TouchableOpacity>
+
+        {imageUri && (
+          <Image source={{ uri: imageUri }} style={styles.imagePreview} />
+        )}
 
         <TouchableOpacity style={styles.buttonSave}>
           <Text style={styles.buttonTextAdd}>Salvar</Text>
@@ -159,6 +124,10 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     marginVertical: 20,
+    resizeMode: 'contain',
+  },
+  image: {
+    width: 24,
+    height: 24,
   },
 });
-

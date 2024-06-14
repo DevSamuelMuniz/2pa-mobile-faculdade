@@ -8,6 +8,7 @@ import RecipeList from "../components/recipeList";
 
 const EDAMAM_APP_ID = "dd1150f6";
 const EDAMAM_APP_KEY = "e2e9e4970d21d43026eb10a14d7394cf";
+const RESULTS_PER_CATEGORY = 20;
 
 export default function HomeScreen({ navigation }) {
   const [healthyRecipes, setHealthyRecipes] = useState([]);
@@ -27,7 +28,8 @@ export default function HomeScreen({ navigation }) {
           app_id: EDAMAM_APP_ID,
           app_key: EDAMAM_APP_KEY,
           calories: `0-${calories}`,
-          health: "gluten-free"
+          health: "paleo",
+          to: RESULTS_PER_CATEGORY
         }
       });
 
@@ -38,7 +40,8 @@ export default function HomeScreen({ navigation }) {
           app_id: EDAMAM_APP_ID,
           app_key: EDAMAM_APP_KEY,
           calories: `0-${calories}`,
-          health: "vegan"
+          health: "vegan",
+          to: RESULTS_PER_CATEGORY
         }
       });
 
@@ -51,6 +54,10 @@ export default function HomeScreen({ navigation }) {
 
   const handleMenuPress = () => {
     console.log("Menu pressed");
+  };
+
+  const handleRefreshRecipes = () => {
+    fetchRecipes();
   };
 
   return (
@@ -74,12 +81,12 @@ export default function HomeScreen({ navigation }) {
         <RecipeList
           title="Receitas Saudáveis"
           recipes={healthyRecipes}
-          onRefresh={fetchRecipes}
+          onRefresh={handleRefreshRecipes} // Passando a função de atualização para o RecipeList
         />
         <RecipeList
           title="Receitas Veganas"
           recipes={veganRecipes}
-          onRefresh={fetchRecipes}
+          onRefresh={handleRefreshRecipes} // Passando a função de atualização para o RecipeList
         />
       </ScrollView>
 
@@ -95,7 +102,7 @@ const styles = StyleSheet.create({
   },
   buttongrafico: {},
   input: {
-    height: 100,
+    height: 40,
     borderColor: "gray",
     borderWidth: 1,
     borderRadius: 10,
@@ -105,5 +112,6 @@ const styles = StyleSheet.create({
   },
   sview: {
     marginBottom: 100,
+    marginHorizontal: 40
   }
 });

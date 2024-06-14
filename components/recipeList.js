@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const RecipeList = ({ title, recipes, onRefresh }) => {
+const RecipeList = ({ title, recipes }) => {
   const navigation = useNavigation();
 
   const handleRecipePress = (recipe) => {
@@ -24,7 +24,7 @@ const RecipeList = ({ title, recipes, onRefresh }) => {
           </TouchableOpacity>
         )}
       />
-      <TouchableOpacity style={styles.button} onPress={onRefresh}>
+      <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Atualizar Receitas</Text>
       </TouchableOpacity>
     </View>

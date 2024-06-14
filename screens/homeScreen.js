@@ -1,25 +1,24 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-
-//components
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import Header from "../components/header";
 import GraficoComponent from "../components/home/grafico";
+import Footer from "../components/footer";
 
 export default function HomeScreen({ navigation }) {
   const handleMenuPress = () => {
-    // Lógica para o menu hamburguer
-    console.log("Menu pressed");
-  };
-
-  const handlegraficopress = () => {
-    // Lógica para o menu hamburguer
     console.log("Menu pressed");
   };
 
   return (
     <View style={styles.container}>
       <Header onMenuPress={handleMenuPress} />
-      <GraficoComponent onGraficoPress={handlegraficopress} />
+      <TouchableOpacity
+        style={styles.buttongrafico}
+        onPress={() => navigation.navigate("metas")}
+      >
+        <GraficoComponent /> 
+      </TouchableOpacity>
+      <Footer navigation={navigation} />
     </View>
   );
 }
@@ -28,10 +27,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-
   },
-  image: {
-    marginTop: 10,
-    marginBottom: 20,
+  buttongrafico: {
   },
 });

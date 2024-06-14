@@ -24,6 +24,7 @@ export default function App() {
                           headerTitleStyle:{
                             fontWeight: '500',
                           },
+                          headerTitleAlign: 'center',
                         }}
       >
         <Stack.Screen name="login" component={LoginScreen} options={{ headerShown: false }} />

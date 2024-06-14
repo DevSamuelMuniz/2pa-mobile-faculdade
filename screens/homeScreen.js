@@ -95,10 +95,10 @@ const styles = StyleSheet.create({
   },
   buttongrafico: {},
   input: {
-    height: 50,
+    height: 100,
     borderColor: "gray",
     borderWidth: 1,
-    borderRadius: 20,
+    borderRadius: 10,
     marginBottom: 20,
     paddingHorizontal: 10,
     width: "80%",

@@ -22,7 +22,7 @@ const Footer = ({ navigation }) => {
         />
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate("addRef")}>
+      <TouchableOpacity onPress={() => navigation.navigate("Adicionar Refeição")}>
         <Image
           source={require("../assets/footer/addRef.png")}
           style={styles.imageAdd}

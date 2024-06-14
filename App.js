@@ -7,6 +7,7 @@ import LoginScreen from './screens/loginScreen';
 import RegistroScreen from './screens/registroScreen';
 import HomeScreen from './screens/homeScreen';
 import RecipeDetailsScreen from './screens/RecipeDetailsScreen';
+import AddRefScreen from './screens/addRefScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -14,11 +15,22 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="login">
+      <Stack.Navigator initialRouteName="login"
+                        screenOptions = {{
+                          headerStyle: {
+                            backgroundColor:'#F28705',
+                          },
+                          headerTintColor: 'white',
+                          headerTitleStyle:{
+                            fontWeight: '500',
+                          },
+                        }}
+      >
         <Stack.Screen name="login" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="registro" component={RegistroScreen} options={{ headerShown: false }} />
         <Stack.Screen name="home" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="RecipeDetails" component={RecipeDetailsScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Adicionar Refeição" component={AddRefScreen} options={{headerShown: true}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

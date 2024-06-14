@@ -67,7 +67,7 @@ export default function HomeScreen({ navigation }) {
       <Header onMenuPress={handleMenuPress} />
       <TouchableOpacity
         style={styles.buttongrafico}
-        onPress={() => navigation.navigate("metas")}
+        onPress={() => navigation.navigate("ProgressScreen")}
       >
         <GraficoComponent />
       </TouchableOpacity>

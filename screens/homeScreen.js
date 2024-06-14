@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, TextInput, ScrollView } from "react-native";
 import axios from "axios";
+
+//acomponents
 import Header from "../components/header";
 import GraficoComponent from "../components/home/grafico";
 import Footer from "../components/footer";

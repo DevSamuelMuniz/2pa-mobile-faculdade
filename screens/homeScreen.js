@@ -6,7 +6,8 @@ import GraficoComponent from "../components/home/grafico";
 import Footer from "../components/footer";
 import RecipeList from "../components/recipeList";
 
-const SPOONACULAR_API_KEY = "287205b89b164bdea08bae0661470da9";
+const EDAMAM_APP_ID = "dd1150f6";
+const EDAMAM_APP_KEY = "e2e9e4970d21d43026eb10a14d7394cf";
 
 export default function HomeScreen({ navigation }) {
   const [healthyRecipes, setHealthyRecipes] = useState([]);
@@ -14,41 +15,37 @@ export default function HomeScreen({ navigation }) {
   const [calories, setCalories] = useState(500);
 
   useEffect(() => {
-    fetchHealthyRecipes();
-    fetchVeganRecipes();
+    fetchRecipes();
   }, [calories]);
 
-  const fetchHealthyRecipes = async () => {
+  const fetchRecipes = async () => {
     try {
-      const response = await axios.get(
-        `https://api.spoonacular.com/recipes/complexSearch`, {
+      const healthyResponse = await axios.get(
+        `https://api.edamam.com/search`, {
         params: {
-          apiKey: SPOONACULAR_API_KEY,
-          maxCalories: calories,
-          number: 3,
-          diet: "popular", // Using diet instead of tags
+          q: "healthy",
+          app_id: EDAMAM_APP_ID,
+          app_key: EDAMAM_APP_KEY,
+          calories: `0-${calories}`,
+          health: "gluten-free"
         }
       });
-      setHealthyRecipes(response.data.results);
-    } catch (error) {
-      console.error("Error fetching healthy recipes:", error);
-    }
-  };
 
-  const fetchVeganRecipes = async () => {
-    try {
-      const response = await axios.get(
-        `https://api.spoonacular.com/recipes/complexSearch`, {
+      const veganResponse = await axios.get(
+        `https://api.edamam.com/search`, {
         params: {
-          apiKey: SPOONACULAR_API_KEY,
-          maxCalories: calories,
-          number: 3,
-          diet: "paleo", // Using diet instead of tags
+          q: "vegan",
+          app_id: EDAMAM_APP_ID,
+          app_key: EDAMAM_APP_KEY,
+          calories: `0-${calories}`,
+          health: "vegan"
         }
       });
-      setVeganRecipes(response.data.results);
+
+      setHealthyRecipes(healthyResponse.data.hits);
+      setVeganRecipes(veganResponse.data.hits);
     } catch (error) {
-      console.error("Error fetching vegan recipes:", error);
+      console.error("Error fetching recipes:", error);
     }
   };
 
@@ -59,34 +56,34 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Header onMenuPress={handleMenuPress} />
-      <ScrollView style={styles.sview}>
-        <TouchableOpacity
-          style={styles.buttongrafico}
-          onPress={() => navigation.navigate("metas")}
-        >
-          <GraficoComponent />
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttongrafico}
+        onPress={() => navigation.navigate("metas")}
+      >
+        <GraficoComponent />
+      </TouchableOpacity>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Digite o número de calorias:"
-          keyboardType="numeric"
-          onChangeText={(text) => setCalories(parseInt(text))}
+      <TextInput
+        style={styles.input}
+        placeholder="Digite o número de calorias:"
+        keyboardType="numeric"
+        onChangeText={(text) => setCalories(parseInt(text))}
+      />
+
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.sview}>
+        <RecipeList
+          title="Receitas Saudáveis"
+          recipes={healthyRecipes}
+          onRefresh={fetchRecipes}
         />
-        <View style={styles.list}>
-          <RecipeList
-            title="Receitas Saudáveis"
-            recipes={healthyRecipes}
-            onRefresh={fetchHealthyRecipes}
-          />
-          <RecipeList
-            title="Receitas Veganas"
-            recipes={veganRecipes}
-            onRefresh={fetchVeganRecipes}
-          />
-        </View>
+        <RecipeList
+          title="Receitas Veganas"
+          recipes={veganRecipes}
+          onRefresh={fetchRecipes}
+        />
       </ScrollView>
-      <Footer navigation={navigation} style={styles.footer}/>
+
+      <Footer navigation={navigation} />
     </View>
   );
 }
@@ -98,18 +95,15 @@ const styles = StyleSheet.create({
   },
   buttongrafico: {},
   input: {
-    height: 40,
+    height: 50,
     borderColor: "gray",
     borderWidth: 1,
+    borderRadius: 20,
     marginBottom: 20,
     paddingHorizontal: 10,
     width: "80%",
-    marginHorizontal: 20,
-  },
-  list: {
-    marginHorizontal: 20,
   },
   sview: {
-  marginBottom: 100,
-  },
+    marginBottom: 100,
+  }
 });

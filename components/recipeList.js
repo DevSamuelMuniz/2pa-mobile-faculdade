@@ -1,22 +1,31 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const RecipeList = ({ title, recipes, onRefresh }) => {
+  const navigation = useNavigation();
+
+  const handleRecipePress = (recipe) => {
+    navigation.navigate('RecipeDetails', { recipe });
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
       <FlatList
         data={recipes}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.recipe.uri}
         renderItem={({ item }) => (
-          <View style={styles.recipeContainer}>
-            <Image source={{ uri: item.image }} style={styles.image} />
-            <Text style={styles.name}>{item.title}</Text>
-          </View>
+          <TouchableOpacity onPress={() => handleRecipePress(item.recipe)}>
+            <View style={styles.recipeContainer}>
+              <Image source={{ uri: item.recipe.image }} style={styles.image} />
+              <Text style={styles.name}>{item.recipe.label}</Text>
+            </View>
+          </TouchableOpacity>
         )}
       />
-      <TouchableOpacity onPress={onRefresh} style={styles.button}>
-        <Text style={styles.buttonText}>Atualizar</Text>
+      <TouchableOpacity style={styles.button} onPress={onRefresh}>
+        <Text style={styles.buttonText}>Atualizar Receitas</Text>
       </TouchableOpacity>
     </View>
   );
@@ -24,12 +33,12 @@ const RecipeList = ({ title, recipes, onRefresh }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 20,
+    marginBottom: 30,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginVertical: 30,
+    marginBottom: 20,
     color: '#F28705',
   },
   recipeContainer: {
@@ -48,14 +57,14 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#F28705',
     padding: 10,
-    borderRadius: 5,
     alignItems: 'center',
+    borderRadius: 5,
     marginTop: 10,
   },
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
-  }
+  },
 });
 
 export default RecipeList;

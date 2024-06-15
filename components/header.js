@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import BurgerMenu from "./BurgerMenu"; 
 
-const Header = ({ onMenuPress }) => {
+const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <View style={styles.header}>
       <Image
@@ -15,9 +22,11 @@ const Header = ({ onMenuPress }) => {
         style={styles.image}
       />
 
-      <TouchableOpacity onPress={onMenuPress}>
+      <TouchableOpacity onPress={toggleMenu}>
         <Ionicons name="menu" size={32} color="white" />
       </TouchableOpacity>
+
+      {isMenuOpen && <BurgerMenu onClose={() => setIsMenuOpen(false)} />}
     </View>
   );
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, TextInput, ScrollView } from "react-native";
 import axios from "axios";
 
-//acomponents
+// Components
 import Header from "../components/header";
 import GraficoComponent from "../components/home/grafico";
 import Footer from "../components/footer";
@@ -64,7 +64,9 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Header onMenuPress={handleMenuPress} />
+      <View style={styles.header}>
+        <Header onMenuPress={handleMenuPress} />
+      </View>
       <TouchableOpacity
         style={styles.buttongrafico}
         onPress={() => navigation.navigate("ProgressScreen")}
@@ -79,20 +81,22 @@ export default function HomeScreen({ navigation }) {
         onChangeText={(text) => setCalories(parseInt(text))}
       />
 
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.sview}>
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
         <RecipeList
           title="Receitas Saudáveis"
           recipes={healthyRecipes}
-          onRefresh={handleRefreshRecipes} // Passando a função de atualização para o RecipeList
+          onRefresh={handleRefreshRecipes} 
         />
         <RecipeList
           title="Receitas Veganas"
           recipes={veganRecipes}
-          onRefresh={handleRefreshRecipes} // Passando a função de atualização para o RecipeList
+          onRefresh={handleRefreshRecipes} 
         />
       </ScrollView>
-
-      <Footer navigation={navigation} />
+      
+      <View style={styles.footer}>
+        <Footer navigation={navigation} />
+      </View>
     </View>
   );
 }
@@ -112,8 +116,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     width: "80%",
   },
-  sview: {
+  scrollView: {
+    flex: 1,
+    width: "100%",
+    paddingHorizontal: 30,
     marginBottom: 100,
-    marginHorizontal: 40
-  }
+  },
+  header: {
+    zIndex: 1,
+    width: '100%'
+  },
+  footer: {
+    zIndex: 2,
+    width: '100%',
+    position: 'absolute',
+    bottom: 0,
+  },
 });
+

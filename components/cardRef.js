@@ -31,12 +31,11 @@ const styles = StyleSheet.create({
     cntText: {
         flex: 1,
         gap: 10
-
     },
     textTitulo: {
         fontSize: 20,
         color: '#F28705',
         fontWeight: 500,
-        
-    }
+    },
+ 
 });

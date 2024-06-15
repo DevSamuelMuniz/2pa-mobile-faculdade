@@ -14,12 +14,15 @@ export default function SuasRef({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Header onMenuPress={handleMenuPress} />
+            <View style={styles.header}>
+                <Header onMenuPress={handleMenuPress} />
+            </View>
+
             <ScrollView showsVerticalScrollIndicator={false} style={styles.sview}>
 
-            <Text style={styles.text}>
-                Suas Refeições
-            </Text>
+                <Text style={styles.text}>
+                    Suas Refeições
+                </Text>
 
                 <View style={styles.cntCard}>
                     <TouchableOpacity>
@@ -48,7 +51,10 @@ export default function SuasRef({ navigation }) {
 
                 </View>
             </ScrollView>
-            <Footer navigation={navigation} />
+
+            <View style={styles.footer}>
+                <Footer navigation={navigation} />
+            </View>
         </View>
     );
 }
@@ -77,6 +83,16 @@ const styles = StyleSheet.create({
     },
     sview: {
         paddingBottom: 120
-    }
+    },
+    header: {
+        zIndex: 1,
+        width: '100%'
+    },
+    footer: {
+        zIndex: 2,
+        width: '100%',
+        position: 'absolute',
+        bottom: 0,
+    },
 });
 

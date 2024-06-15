@@ -41,7 +41,7 @@ const BurgerMenu = ({ onClose }) => {
 const styles = StyleSheet.create({
     container: {
         position: "absolute",
-        top: 60,
+        top: 105,
         right: 0,
         width: 300,
         backgroundColor: "#F28705",

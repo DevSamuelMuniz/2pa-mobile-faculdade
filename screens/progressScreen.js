@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, TextInput, ScrollView } from "react-native";
 
+import Header from "../components/header";
+import Footer from "../components/footer";
 
 export default function progressScreen({ navigation }) {
 

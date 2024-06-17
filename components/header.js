@@ -34,7 +34,6 @@ const Header = () => {
 const styles = StyleSheet.create({
   header: {
     width: "100%",
-    height: 110, //60
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -42,7 +41,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F28705",
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
-    paddingTop: 33, //margintop
+    paddingVertical: 10
   },
 });
 

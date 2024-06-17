@@ -10,10 +10,6 @@ export default function progressScreen({ navigation }) {
         console.log("Menu pressed");
     };
 
-    const handleRefreshRecipes = () => {
-        fetchRecipes();
-    };
-
     return (
         <View style={styles.container}>
             <Header onMenuPress={handleMenuPress} />

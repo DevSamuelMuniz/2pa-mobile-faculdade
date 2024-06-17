@@ -1,11 +1,10 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from "react-native";
 
 // Components
 import Header from "../components/header";
 import Footer from "../components/footer";
 import CardRef from "../components/cardRef";
-import { ScrollView } from "react-native-web";
 
 export default function SuasRef({ navigation }) {
     const handleMenuPress = () => {
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
         gap: 20
     },
     sview: {
-        paddingBottom: 120
+        marginBottom: 120
     },
     header: {
         zIndex: 1,

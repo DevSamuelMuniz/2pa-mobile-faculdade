@@ -1,18 +1,15 @@
 import React from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 
-
-export default function graficoComponent() {
+export default function GraficoComponent() {
   return (
     <View style={styles.container}>
-
       <Text style={styles.textMetas}> Suas metas</Text>
-
       <Image
         source={require("../../assets/home/grafico.png")}
         style={styles.image}
+        resizeMode="contain"
       />
-
       <Text style={styles.textSaiba}> clique e saiba mais</Text>
     </View>
   );
@@ -20,13 +17,12 @@ export default function graficoComponent() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: "center",
-    padding: 20,
   },
   image: {
     marginTop: 10,
-    marginBottom: 20,
+    height: 200,
+    width: '100%',
   },
   textMetas: {
     fontSize: 26,

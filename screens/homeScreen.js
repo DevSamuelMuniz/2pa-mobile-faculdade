@@ -105,8 +105,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    backgroundColor: '#F3F4F5'
   },
-  buttongrafico: {},
+  buttongrafico: {
+    marginVertical: 20,
+  },
   input: {
     height: 40,
     borderColor: "gray",
@@ -133,4 +136,3 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
 });
-

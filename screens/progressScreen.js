@@ -4,7 +4,7 @@ import { View, StyleSheet, TouchableOpacity, TextInput, ScrollView } from "react
 import Header from "../components/header";
 import Footer from "../components/footer";
 
-export default function progressScreen({ navigation }) {
+export default function ProgressScreen({ navigation }) {
 
     const handleMenuPress = () => {
         console.log("Menu pressed");

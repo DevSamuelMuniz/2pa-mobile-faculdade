@@ -82,16 +82,20 @@ export default function HomeScreen({ navigation }) {
       />
 
       <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
-        <RecipeList
-          title="Receitas Saudáveis"
-          recipes={healthyRecipes}
-          onRefresh={handleRefreshRecipes} 
-        />
-        <RecipeList
-          title="Receitas Veganas"
-          recipes={veganRecipes}
-          onRefresh={handleRefreshRecipes} 
-        />
+        <View style={styles.recipeListContainer}>
+          <RecipeList
+            title="Receitas Saudáveis"
+            recipes={healthyRecipes}
+            onRefresh={handleRefreshRecipes} 
+          />
+        </View>
+        <View style={styles.recipeListContainer}>
+          <RecipeList
+            title="Receitas Veganas"
+            recipes={veganRecipes}
+            onRefresh={handleRefreshRecipes} 
+          />
+        </View>
       </ScrollView>
       
       <View style={styles.footer}>
@@ -124,6 +128,9 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 30,
     marginBottom: 100,
+  },
+  recipeListContainer: {
+    marginBottom: 20,
   },
   header: {
     zIndex: 1,

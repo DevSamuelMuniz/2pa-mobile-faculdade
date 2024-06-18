@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
     position: "absolute",
-    bottom: 0,
+    bottom: -1,
   },
   image: {
     width: 35,

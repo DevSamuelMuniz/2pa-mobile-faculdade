@@ -104,7 +104,7 @@ export default function ProgressScreen({ navigation }) {
       <Text style={styles.text}>Progresso</Text>
 
       <View style={styles.graficoContainer}>
-        <PieChart
+        <PieChart style={{marginLeft: '47%'}}
           data={chartData}
           width={Dimensions.get("window").width}
           height={220}
@@ -190,6 +190,7 @@ export default function ProgressScreen({ navigation }) {
               placeholder="Nome da Meta"
               value={novaMetaNome}
               onChangeText={setNovaMetaNome}
+              placeholder:Nome da meta
             />
 
             <TextInput
@@ -201,16 +202,10 @@ export default function ProgressScreen({ navigation }) {
             />
 
             <View style={styles.modalButtons}>
-              <TouchableOpacity
-                style={styles.cancelButton}
-                onPress={fecharModal}
-              >
+              <TouchableOpacity style={styles.cancelButton} onPress={fecharModal}>
                 <Text style={styles.buttonText}>Cancelar</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.addButtonModal}
-                onPress={adicionarMeta}
-              >
+              <TouchableOpacity style={styles.addButtonModal} onPress={adicionarMeta}>
                 <Text style={styles.buttonText}>Adicionar</Text>
               </TouchableOpacity>
             </View>

@@ -190,7 +190,6 @@ export default function ProgressScreen({ navigation }) {
               placeholder="Nome da Meta"
               value={novaMetaNome}
               onChangeText={setNovaMetaNome}
-              placeholder:Nome da meta
             />
 
             <TextInput

@@ -24,7 +24,7 @@ export default function RegistroScreen({ navigation }) {
         return;
       }
 
-      const response = await axios.post('http://localhost:3000/usuario/registrar', {
+      const response = await axios.post('http://10.0.0.149:3000/usuario/registrar', {
         nome,
         email,
         senha,

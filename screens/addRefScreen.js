@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
+import axios from 'axios';
 
 //components
 import InputLabel from '../components/inputLabel';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function LoginScreen({ navigation }) {
-  const [nomeRef, setnomeRef] = useState("");
-  const [descRef, setdescRef] = useState("");
+
+  const [nomeRef, setNomeRef] = useState("");
+  const [descRef, setDescRef] = useState("");
   const [imageUri, setImageUri] = useState(null);
 
   const handlePhotoOption = async () => {
-    // Solicita permissão para usar a câmera
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
     if (status !== 'granted') {
       Alert.alert('Permissão necessária', 'Precisamos da permissão para acessar a câmera');
@@ -22,13 +25,43 @@ export default function LoginScreen({ navigation }) {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.6,
     });
 
-    if (!result.canceled) {
+    if (!result.cancelled) {
       console.log("Image URI: ", result.uri);
       setImageUri(result.uri);
       Alert.alert('Foto Capturada', 'Sua foto foi tirada com sucesso!');
+    }
+  };
+
+
+
+  const handleSave = async () => {
+    const userToken = await AsyncStorage.getItem('userToken');
+
+    try {
+      const formData = new FormData();
+      formData.append('nome', nomeRef);
+      formData.append('descricao', descRef);
+      formData.append('foto', imageUri); // Apenas a URI da imagem
+
+      const response = await axios.post('http://10.0.0.149:3000/usuario/criar-refeicao', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${userToken}`, // Substitua userToken pelo token JWT do usuário logado
+        },
+      });
+
+      console.log(response.data);
+      Alert.alert('Refeição Criada', 'Sua refeição foi criada com sucesso!');
+      setNomeRef("");
+      setDescRef("");
+      setImageUri(null);
+
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Erro ao Criar Refeição', 'Ocorreu um erro ao criar a refeição.');
     }
   };
 
@@ -39,7 +72,7 @@ export default function LoginScreen({ navigation }) {
       </View>
       <InputLabel
         value={nomeRef}
-        onChangeText={setnomeRef}
+        onChangeText={setNomeRef}
         placeholder="Digite um nome para a sua refeição"
       />
       <View style={styles.labelcontainer}>
@@ -47,7 +80,7 @@ export default function LoginScreen({ navigation }) {
       </View>
       <InputLabel
         value={descRef}
-        onChangeText={setdescRef}
+        onChangeText={setDescRef}
         placeholder="Descreva a sua refeição"
       />
 
@@ -64,7 +97,7 @@ export default function LoginScreen({ navigation }) {
           <Image source={{ uri: imageUri }} style={styles.imagePreview} />
         )}
 
-        <TouchableOpacity style={styles.buttonSave}>
+        <TouchableOpacity style={styles.buttonSave} onPress={handleSave}>
           <Text style={styles.buttonTextAdd}>Salvar</Text>
         </TouchableOpacity>
       </View>

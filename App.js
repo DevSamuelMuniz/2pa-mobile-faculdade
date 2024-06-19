@@ -3,6 +3,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Platform, SafeAreaView, StatusBar, StyleSheet } from "react-native";
 
+//token
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 //screens
 import LoginScreen from "./screens/loginScreen";
 import RegistroScreen from "./screens/registroScreen";
@@ -15,6 +18,8 @@ import SuasRef from "./screens/suasRef";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
+  
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar

@@ -5,16 +5,37 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
-  Button,
+  Alert,
 } from "react-native";
+import axios from "axios";
 
 //components
 import InputLabel from "../components/inputLabel";
 import ButtonCustom from "../components/buttonCustom";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:3000/usuario/login', {
+        email,
+        senha,
+      });
+
+      const { token } = response.data;
+
+      await AsyncStorage.setItem('userToken', token)
+
+   
+      navigation.navigate('home');
+    } catch (error) {
+      Alert.alert("Erro de autenticação", "Email ou senha incorretos");
+      console.log(error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -34,10 +55,11 @@ export default function LoginScreen({ navigation }) {
         value={senha}
         onChangeText={setSenha}
         placeholder="Digite a sua senha aqui"
+        secureTextEntry
       />
       <ButtonCustom
         title="Entrar"
-        onPress={() => navigation.navigate("home")}
+        onPress={handleLogin}
       />
 
       <Text style={styles.textCriar}>Não tem uma conta?</Text>

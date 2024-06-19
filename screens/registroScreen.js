@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import axios from "axios";
 
 //components
 import InputLabel from "../components/inputLabel";
@@ -9,6 +10,34 @@ export default function RegistroScreen({ navigation }) {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [confirmarsenha, setconfirmarsenha] = useState("");
+
+  const handleRegister = async () => {
+    try {
+      if (!nome || !email || !senha || !confirmarsenha) {
+        Alert.alert("Erro", "Preencha todos os campos obrigatórios.");
+        return;
+      }
+
+      if (senha !== confirmarsenha) {
+        Alert.alert("Erro", "As senhas não conferem.");
+        return;
+      }
+
+      const response = await axios.post('http://localhost:3000/usuario/registrar', {
+        nome,
+        email,
+        senha,
+        confirmarsenha,
+      });
+
+      Alert.alert("Sucesso", response.data.msg);
+      navigation.navigate("login");
+    } catch (error) {
+      Alert.alert("Erro", "Erro ao cadastrar usuário. Verifique os dados e tente novamente.");
+      console.log(error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -35,16 +64,18 @@ export default function RegistroScreen({ navigation }) {
         value={senha}
         onChangeText={setSenha}
         placeholder="Digite a sua senha aqui"
+        secureTextEntry
       />
       <InputLabel
         label="Confirmar senha"
-        value={senha}
-        onChangeText={setSenha}
+        value={confirmarsenha}
+        onChangeText={setconfirmarsenha}
         placeholder="Digite a mesma senha aqui"
+        secureTextEntry
       />
       <ButtonCustom
         title="Cadastrar"
-        onPress={() => navigation.navigate("login")}
+        onPress={handleRegister}
       />
 
       <Text style={styles.textCriar}>Já tem uma conta?</Text>
@@ -65,6 +96,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     backgroundColor: "#F28705",
+  },
+  image: {
+    margin: 10,
   },
   textHeader: {
     fontSize: 24,

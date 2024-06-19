@@ -8,7 +8,7 @@ import InputLabel from '../components/inputLabel';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function LoginScreen({ navigation }) {
+export default function AddRefScreen({ navigation }) {
 
   const [nomeRef, setNomeRef] = useState("");
   const [descRef, setDescRef] = useState("");
@@ -35,16 +35,28 @@ export default function LoginScreen({ navigation }) {
     }
   };
 
-
-
   const handleSave = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
+
+    if (!userToken) {
+      Alert.alert('Erro', 'Usuário não autenticado');
+      return;
+    }
+
+    if (!imageUri) {
+      Alert.alert('Erro', 'Nenhuma imagem selecionada');
+      return;
+    }
 
     try {
       const formData = new FormData();
       formData.append('nome', nomeRef);
       formData.append('descricao', descRef);
-      formData.append('foto', imageUri); // Apenas a URI da imagem
+      formData.append('foto', {
+        uri: imageUri,
+        type: 'image/jpeg',
+        name: 'image.jpg'
+      });
 
       const response = await axios.post('http://10.0.0.149:3000/usuario/criar-refeicao', formData, {
         headers: {

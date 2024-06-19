@@ -52,10 +52,15 @@ export default function AddRefScreen({ navigation }) {
       const formData = new FormData();
       formData.append('nome', nomeRef);
       formData.append('descricao', descRef);
+
+      // Obtém a extensão do arquivo a partir da URI da imagem
+      const uriParts = imageUri.split('.');
+      const fileType = uriParts[uriParts.length - 1];
+
       formData.append('foto', {
         uri: imageUri,
-        type: 'image/jpeg',
-        name: 'image.jpg'
+        type: `image/${fileType}`,
+        name: `image.${fileType}`
       });
 
       const response = await axios.post('http://10.0.0.149:3000/usuario/criar-refeicao', formData, {

@@ -19,24 +19,7 @@ import Footer from "../components/footer";
 
 export default function ProgressScreen({ navigation }) {
   const [metas, setMetas] = useState([
-    {
-      id: 1,
-      nome: "beber água",
-      metaVal: 10,
-      metaAtual: 0,
-    },
-    {
-      id: 2,
-      nome: "tomar café",
-      metaVal: 20,
-      metaAtual: 0,
-    },
-    {
-      id: 3,
-      nome: "corrida matinal",
-      metaVal: 20,
-      metaAtual: 0,
-    },
+  
   ]);
 
   const coresMetas = ["#C96E00", "#FBA946", "#73CD00", "#5FA604"];

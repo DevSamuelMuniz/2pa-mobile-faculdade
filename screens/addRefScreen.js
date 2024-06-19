@@ -5,11 +5,9 @@ import axios from 'axios';
 
 //components
 import InputLabel from '../components/inputLabel';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function AddRefScreen({ navigation }) {
-
   const [nomeRef, setNomeRef] = useState("");
   const [descRef, setDescRef] = useState("");
   const [imageUri, setImageUri] = useState(null);
@@ -30,8 +28,10 @@ export default function AddRefScreen({ navigation }) {
 
     if (!result.cancelled) {
       console.log("Image URI: ", result.uri);
-      setImageUri(result.uri);
+      setImageUri(result.uri); // Define a URI da imagem no estado
       Alert.alert('Foto Capturada', 'Sua foto foi tirada com sucesso!');
+    } else {
+      Alert.alert('Foto Cancelada', 'Você cancelou a captura da foto.');
     }
   };
 
@@ -61,7 +61,7 @@ export default function AddRefScreen({ navigation }) {
       const response = await axios.post('http://10.0.0.149:3000/usuario/criar-refeicao', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${userToken}`, // Substitua userToken pelo token JWT do usuário logado
+          'Authorization': `Bearer ${userToken}`,
         },
       });
 

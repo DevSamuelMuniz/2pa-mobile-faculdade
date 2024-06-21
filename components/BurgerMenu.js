@@ -1,21 +1,22 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Image } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from '@react-navigation/native'; // Importe useNavigation para acessar a navegação
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const BurgerMenu = ({ onClose, navigation }) => {
-    // Calcula a altura do container como 80% da altura da tela
+const BurgerMenu = ({ onClose }) => {
+    const navigation = useNavigation(); // Obtém a instância de navegação
+
     const containerHeight = windowHeight * 0.8;
 
     const handleLogout = async () => {
         try {
-            // Remove o token do armazenamento local
-            await AsyncStorage.removeItem('userToken');
+            await AsyncStorage.removeItem('userToken'); // Remove o token do AsyncStorage
 
-            // Redireciona para a tela de login
-            navigation.navigate('Login');
+            navigation.navigate('login'); // Navega para a tela de login
+            onClose(); // Fecha o menu após o logout
         } catch (error) {
             console.error('Erro ao sair:', error);
         }
@@ -87,6 +88,11 @@ const styles = StyleSheet.create({
     closeText: {
         color: "white",
         fontSize: 16,
+    },
+    image: {
+        width: 24,
+        height: 24,
+        marginRight: 10,
     },
 });
 

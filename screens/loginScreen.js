@@ -28,9 +28,8 @@ export default function LoginScreen({ navigation }) {
       const { token } = response.data;
 
       await AsyncStorage.setItem('userToken', token)
-
-   
       navigation.navigate('home');
+
     } catch (error) {
       Alert.alert("Erro de autenticação", "Email ou senha incorretos");
       console.log(error);

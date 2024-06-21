@@ -44,11 +44,11 @@ export default function SuasRef({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-            <Header onMenuPress={handleMenuPress} navigation={navigation} />
+                <Header onMenuPress={handleMenuPress} navigation={navigation} />
             </View>
 
+            <Text style={styles.text}>Suas Refeições</Text>
             <ScrollView showsVerticalScrollIndicator={false} style={styles.sview}>
-                <Text style={styles.text}>Suas Refeições</Text>
 
                 <View style={styles.cntCard}>
                     {refeicoes.map((refeicao) => (
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '90%',
         marginHorizontal: '5%',
-        gap: 20
+        gap: 4,
     },
     sview: {
         marginBottom: 120

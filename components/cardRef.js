@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: 'white',
         borderRadius: 10,
-        gap: 16,
+        gap: 20,
         marginVertical: 10,
     },
     cntText: {

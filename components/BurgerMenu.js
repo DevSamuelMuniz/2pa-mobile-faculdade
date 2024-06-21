@@ -54,14 +54,14 @@ const BurgerMenu = ({ onClose, navigation }) => {
 const styles = StyleSheet.create({
     container: {
         position: "absolute",
-        top: 40,
+        top: 60,
         right: 0,
         width: 300,
         backgroundColor: "#F28705",
         paddingVertical: 10,
         paddingHorizontal: 15,
         justifyContent: 'flex-end',
-        paddingBottom: 40,
+        paddingBottom: 80,
         zIndex: 100,
         gap: 14,
         opacity: 0.95,

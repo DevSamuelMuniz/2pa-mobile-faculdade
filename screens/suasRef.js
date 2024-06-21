@@ -1,5 +1,7 @@
-import React from "react";
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView, Alert } from "react-native";
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Components
 import Header from "../components/header";
@@ -7,6 +9,34 @@ import Footer from "../components/footer";
 import CardRef from "../components/cardRef";
 
 export default function SuasRef({ navigation }) {
+    const [refeicoes, setRefeicoes] = useState([]);
+
+    useEffect(() => {
+        const fetchRefeicoes = async () => {
+            const userToken = await AsyncStorage.getItem('userToken');
+
+            if (!userToken) {
+                Alert.alert('Erro', 'Usuário não autenticado');
+                return;
+            }
+
+            try {
+                const response = await axios.get('http://10.0.0.149:3000/usuario/listar-refeicoes', {
+                    headers: {
+                        'Authorization': `Bearer ${userToken}`,
+                    },
+                });
+
+                setRefeicoes(response.data);
+            } catch (error) {
+                console.error(error);
+                Alert.alert('Erro ao Buscar Refeições', 'Ocorreu um erro ao buscar as refeições.');
+            }
+        };
+
+        fetchRefeicoes();
+    }, []);
+
     const handleMenuPress = () => {
         console.log("Menu pressed");
     };
@@ -14,40 +44,18 @@ export default function SuasRef({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Header onMenuPress={handleMenuPress} />
+            <Header onMenuPress={handleMenuPress} navigation={navigation} />
             </View>
 
             <ScrollView showsVerticalScrollIndicator={false} style={styles.sview}>
-
-                <Text style={styles.text}>
-                    Suas Refeições
-                </Text>
+                <Text style={styles.text}>Suas Refeições</Text>
 
                 <View style={styles.cntCard}>
-                    <TouchableOpacity>
-                        <CardRef />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity>
-                        <CardRef />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity>
-                        <CardRef />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity>
-                        <CardRef />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity>
-                        <CardRef />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity>
-                        <CardRef />
-                    </TouchableOpacity>
-
+                    {refeicoes.map((refeicao) => (
+                        <TouchableOpacity key={refeicao._id}>
+                            <CardRef titulo={refeicao.nome} descricao={refeicao.descricao} />
+                        </TouchableOpacity>
+                    ))}
                 </View>
             </ScrollView>
 
@@ -63,7 +71,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#F3F4F5'
     },
-
     text: {
         fontSize: 25,
         fontWeight: 'bold',
@@ -94,4 +101,3 @@ const styles = StyleSheet.create({
         bottom: 0,
     },
 });
-

@@ -1,12 +1,25 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Image } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const BurgerMenu = ({ onClose }) => {
+const BurgerMenu = ({ onClose, navigation }) => {
     // Calcula a altura do container como 80% da altura da tela
     const containerHeight = windowHeight * 0.8;
+
+    const handleLogout = async () => {
+        try {
+            // Remove o token do armazenamento local
+            await AsyncStorage.removeItem('userToken');
+
+            // Redireciona para a tela de login
+            navigation.navigate('Login');
+        } catch (error) {
+            console.error('Erro ao sair:', error);
+        }
+    };
 
     return (
         <View style={[styles.container, { height: containerHeight }]}>
@@ -31,7 +44,7 @@ const BurgerMenu = ({ onClose }) => {
                 />
                 <Text style={styles.menuText}>Políticas de Privacidade</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+            <TouchableOpacity style={styles.closeButton} onPress={handleLogout}>
                 <Text style={styles.closeText}>Sair</Text>
             </TouchableOpacity>
         </View>
@@ -41,7 +54,7 @@ const BurgerMenu = ({ onClose }) => {
 const styles = StyleSheet.create({
     container: {
         position: "absolute",
-        top: 105,
+        top: 40,
         right: 0,
         width: 300,
         backgroundColor: "#F28705",

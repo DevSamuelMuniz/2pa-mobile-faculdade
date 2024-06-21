@@ -3,7 +3,7 @@ import { View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import BurgerMenu from "./BurgerMenu"; 
 
-const Header = () => {
+const Header = ({ navigation }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -26,7 +26,7 @@ const Header = () => {
         <Ionicons name="menu" size={32} color="white" />
       </TouchableOpacity>
 
-      {isMenuOpen && <BurgerMenu onClose={() => setIsMenuOpen(false)} />}
+      {isMenuOpen && <BurgerMenu onClose={() => setIsMenuOpen(false)} navigation={navigation} />}
     </View>
   );
 };

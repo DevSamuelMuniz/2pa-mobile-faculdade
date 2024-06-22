@@ -41,8 +41,6 @@ expo e expo-constants: Utilizados para configurações e funcionalidades especí
 
 expo-image-picker e react-native-image-picker: Para captura de imagens dos alimentos.
 
-i18n-js e i18next: Bibliotecas para suporte a múltiplos idiomas.
-
 axios: Cliente HTTP para fazer requisições de API.
 
 react-native-vector-icons: Ícones vetoriais personalizáveis para React Native.
